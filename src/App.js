@@ -4,8 +4,8 @@ import { Container, Row, Col } from 'react-bootstrap';
 import './bootstrap.css';
 import './gridStyle.css';
 
-import GridSample from './GridSample';
 import AddGrid from './AddGrid';
+import GridTotal from './GridTotal';
 
 function App() {
   const stageCanvasRef = useRef(null);
@@ -28,7 +28,7 @@ function App() {
             <AddGrid />
           </Col>
           <Col md="12" lg="10" ref={stageCanvasRef}>
-            <GridSample />
+            <GridTotal />
           </Col>
         </Row>
       </Container>
