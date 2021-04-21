@@ -19,6 +19,7 @@ function AddGrid() {
       { i: 'ADD' + addNo, name: addNo, x: 0, y: 1, w: 1, h: 1 },
     ]);
   };
+  //1
 
   return (
     <>

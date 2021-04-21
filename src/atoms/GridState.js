@@ -10,6 +10,7 @@ export const GridWidth = atom({
   default: window.innerWidth * (9.5 / 12),
 });
 
+//1
 export const Grid = atom({
   key: 'gridState',
   default: [
