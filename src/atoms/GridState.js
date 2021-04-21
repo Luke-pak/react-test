@@ -27,7 +27,7 @@ export const Grid = atom({
 
 export const ModalGrid = atom({
   key: 'modalGridState',
-  default: [],
+  default: [{ i: 'modalA', name: 'modalA', x: 7, y: 3, w: 10, h: 10 }],
 });
 
 export const GridPage = atom({ key: 'gridPage', default: 0 });

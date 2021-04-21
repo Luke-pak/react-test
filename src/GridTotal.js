@@ -4,19 +4,26 @@ import { GridWidth, WindowSize } from './atoms/GridState';
 
 import GridFixedAsset from './GridFixedAsset';
 import GridToto from './GridTodo';
+import GridModal from './GridModal';
 
 function GridTotal() {
   const setGridWidth = useSetRecoilState(GridWidth);
   const [windowSize, setWindowSize] = useRecoilState(WindowSize);
 
   const stageCanvasRef = useRef(null);
+
+  const SetHeight = () => {
+    const _windowSize = {
+      width: window.innerWidth,
+      height: window.innerHeight - 40,
+    };
+    setWindowSize(_windowSize);
+  };
+
   useEffect(() => {
+    SetHeight();
     let handleResize = () => {
-      const _windowSize = {
-        width: window.innerWidth,
-        height: window.innerHeight - 60,
-      };
-      setWindowSize(_windowSize);
+      SetHeight();
       if (stageCanvasRef.current) {
         let width = stageCanvasRef.current.offsetWidth;
         setGridWidth(width);
@@ -42,6 +49,7 @@ function GridTotal() {
         ></div>
         <GridFixedAsset />
         <GridToto />
+        <GridModal />
       </div>
     </>
   );

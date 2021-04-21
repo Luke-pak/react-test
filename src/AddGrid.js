@@ -31,7 +31,7 @@ function AddGrid() {
           setPage(0);
         }}
       >
-        All11
+        All
       </Button>
       <Button
         onClick={() => {
