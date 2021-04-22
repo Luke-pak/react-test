@@ -1,19 +1,22 @@
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import ReactGridLayout from 'react-grid-layout';
-import { GridWidth, GridPage, ModalGrid } from './atoms/GridState';
+import { GridWidth, GridPage, ModalGrid, ModalShow } from './atoms/GridState';
 import { Modal } from 'react-bootstrap';
 
 function GridModal() {
   const page = useRecoilValue(GridPage);
   const gridWidth = useRecoilValue(GridWidth);
   const modalGrid = useRecoilValue(ModalGrid);
+  const [modalShow, setModalShowState] = useRecoilState(ModalShow);
 
-  // { i: 'modalA', name: 'modalA', x: 3, y: 3, w: 2, h: 2}
+  const handleClose = () => setModalShowState(false);
 
   const modalGenerateDOM = () => {
     return modalGrid.map((val, idx) => {
       return (
-        <Modal.Dialog
+        <Modal
+          show={modalShow}
+          onHide={handleClose}
           key={val.i}
           data-grid={val}
           style={{ background: 'none', border: 'none' }}
@@ -23,9 +26,9 @@ function GridModal() {
           </Modal.Header>
 
           <Modal.Body>
-            <p>Modal body text goes here.</p>
+            <p>{val.name}</p>
           </Modal.Body>
-        </Modal.Dialog>
+        </Modal>
       );
     });
   };
@@ -34,10 +37,10 @@ function GridModal() {
     <>
       <ReactGridLayout
         className={'layout'}
-        cols={30}
+        cols={50}
         rowHeight={30}
         width={gridWidth}
-        autoSize={true}
+        autoSize={false}
         margin={[2, 2]}
         preventCollision={true}
         verticalCompact={false}

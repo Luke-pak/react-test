@@ -41,7 +41,7 @@ function GridTotal() {
       >
         <div
           style={{
-            width: '20%',
+            width: '15%',
             height: windowSize.height,
             float: 'right',
             backgroundColor: 'wheat',

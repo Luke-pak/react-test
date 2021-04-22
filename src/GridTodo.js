@@ -8,9 +8,9 @@ function GridToto() {
   const gridWidth = useRecoilValue(GridWidth);
 
   const dropItem = [
-    { i: 'DA', name: 'DA', x: 24, y: 10, w: 2, h: 1 },
-    { i: 'DB', name: 'DB', x: 24, y: 11, w: 2, h: 1 },
-    { i: 'DC', name: 'DC', x: 24, y: 12, w: 2, h: 1 },
+    { i: 'DA', name: 'DA', x: 43, y: 20, w: 4, h: 1 },
+    { i: 'DB', name: 'DB', x: 43, y: 21, w: 4, h: 1 },
+    { i: 'DC', name: 'DC', x: 43, y: 22, w: 4, h: 1 },
   ];
 
   const dropGenerateDOM = () => {
@@ -54,10 +54,10 @@ function GridToto() {
     <>
       <ReactGridLayout
         className={'layout'}
-        cols={30}
+        cols={50}
         rowHeight={30}
         width={gridWidth}
-        autoSize={true}
+        autoSize={false}
         margin={[2, 2]}
         preventCollision={true}
         verticalCompact={false}

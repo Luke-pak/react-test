@@ -1,16 +1,75 @@
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import ReactGridLayout from 'react-grid-layout';
-import { Grid, GridWidth, GridPage } from './atoms/GridState';
+import {
+  Grid,
+  GridWidth,
+  GridPage,
+  ModalGrid,
+  ModalShow,
+} from './atoms/GridState';
+
+import { Row, Col, Container } from 'react-bootstrap';
 
 function GridFixedAsset() {
   const [layout, setLayout] = useRecoilState(Grid);
   const page = useRecoilValue(GridPage);
   const gridWidth = useRecoilValue(GridWidth);
+  const setModal = useSetRecoilState(ModalGrid);
+
+  const setModalShowState = useSetRecoilState(ModalShow);
 
   const ClickItem = e => {
     const key = e.target.id;
     const clickItem = layout.find(item => item.i === key);
-    console.log(clickItem);
+    setModal([
+      {
+        i: `modal${clickItem.name}`,
+        name: `modalA${clickItem.name}`,
+        x: 0,
+        y: 0,
+        w: 30,
+        h: 20,
+      },
+    ]);
+
+    setModalShowState(true);
+
+    // { i: 'modalA', name: 'modalA', x: 7, y: 3, w: 10, h: 10 }
+  };
+
+  const makeGauge = () => {
+    let gauge = [];
+    for (let index = 0; index < 5; index++) {
+      gauge.push(
+        <div
+          style={{
+            margin: '3px',
+            width: '15px',
+            height: '9px',
+            backgroundColor: 'white',
+          }}
+        ></div>
+      );
+    }
+    return gauge;
+  };
+
+  const makeGaugeCol = () => {
+    let gauge = [];
+    for (let index = 0; index < 4; index++) {
+      gauge.push(
+        <Col
+          lg="2"
+          style={{
+            height: '62px',
+            padding: '0',
+          }}
+        >
+          {makeGauge()}
+        </Col>
+      );
+    }
+    return gauge;
   };
 
   const generateDOM = () => {
@@ -21,10 +80,36 @@ function GridFixedAsset() {
             key={val.i}
             id={val.i}
             data-grid={val}
-            style={{ backgroundColor: 'wheat' }}
-            onClick={ClickItem}
+            style={{ backgroundColor: '#00000000', border: 'none' }}
+            // onClick={ClickItem}
           >
-            {val.name}
+            <div
+              style={{
+                border: '8px solid #2196f3',
+                borderRadius: '15px',
+                height: '100px',
+                width: '100px',
+                color: 'white',
+                cursor: 'pointer',
+              }}
+            >
+              <Container className="justify-content-md-center p-0">
+                <Row className="justify-content-md-center">
+                  <Col
+                    lg="12"
+                    style={{ textAlign: 'center', fontWeight: 'bold' }}
+                  >
+                    {val.name}
+                  </Col>
+
+                  <Col lg="12" style={{ height: '5em', paddingLeft: '13px' }}>
+                    <Row className="justify-content-md-center">
+                      {makeGaugeCol()}
+                    </Row>
+                  </Col>
+                </Row>
+              </Container>
+            </div>
           </div>
         );
       } else {
@@ -45,31 +130,33 @@ function GridFixedAsset() {
     const _oldItem = layout.find(item => item.i === oldItem.i);
     newItem.name = _oldItem.name;
 
-    if (newItem.x >= 24 && oldItem.x < 24) {
+    if (newItem.x >= 43 && oldItem.x < 43) {
       // alert('삭제되었습니다.');
-      newItem.w = 2;
-      newItem.h = 1;
+      newItem.w = 4;
+      newItem.h = 3;
       setLayout([...newLayout, newItem]);
-    } else if (newItem.x < 24 && oldItem.x >= 24) {
-      newItem.w = 2;
-      newItem.h = 2;
+    } else if (newItem.x < 43 && oldItem.x >= 43) {
+      newItem.w = 4;
+      newItem.h = 3;
       setLayout([...newLayout, newItem]);
     }
+
+    console.log(newItem.x, newItem.y);
   };
 
   return (
     <>
       <ReactGridLayout
         className={'layout'}
-        cols={30}
+        cols={50}
         rowHeight={30}
         width={gridWidth}
-        autoSize={true}
+        autoSize={false}
         margin={[2, 2]}
         preventCollision={true}
         verticalCompact={false}
         isDraggable={true}
-        isResizable={true}
+        isResizable={false}
         onDragStop={ItemCallback}
         style={{ position: 'absolute' }}
       >
